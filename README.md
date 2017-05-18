@@ -2,23 +2,31 @@
 
 [![Releases](https://img.shields.io/badge/release-v0.8.0--alpha-green.svg?style=plastic)](https://github.com/rodralez/NaveGo/releases) [![DOI](https://zenodo.org/badge/12745155.svg)](https://zenodo.org/badge/latestdoi/12745155)
 
-NaveGo: an open-source MATLAB toolbox for simulating integrated navigation systems and performing Allan variance analysis.
+NaveGo: an open-source MATLAB/GNU Octave toolbox for processing integrated navigation systems and performing inertial sensors profiling analysis.
+
+NaveGo is an open-source framework for processing INS/GPS sensors that is freely available online. It is developed under MATLAB/GNU Octave due to this programming language has become a *de facto* standard for simulation and mathematical computing. NaveGo has been verified by processing real-world data from a real trajectory and contrasting results with a commercial, closed-source software package. Difference between both solutions have shown to be negligible. 
+
+NaveGo is supported at the moment by three academic research groups: GridTics at the National University of Technology (Argentina), ITIC at the National University of Cuyo (Argentina), and DIATI at the Politecnico di Torino (Italy). 
 
 ## Features
 
 Main features of NaveGo are:
 
-* Simulation of an inertial navigation system (INS).
+* Processing of an inertial navigation system (INS).
 
-* Simulation of a loosely-coupled integrated navigation system (INS/GPS).
+* Processing of a loosely-coupled integrated navigation system (INS/GPS).
 
-* Implementation of the Allan variance procedure in order to characterize the typical errors of an IMU. 
+* Implementation of the Allan variance procedure to characterize inertial sensors' typical errors.
 
-* Simulation of IMU sensors (in a very early stage).
+* Simulation of inertial sensors and GPS (in a very early stage).
+
+## How to cite this work
+
+Rodrigo Gonzalez, Carlos Catania, and Paolo Dabove (2016). NaveGo: an open-source MATLAB/GNU Octave toolbox for processing integrated navigation systems and performing inertial sensors profiling analysis. http://doi.org/10.5281/zenodo.165125. URL: https://github.com/rodralez/NaveGo/.
 
 ## Contributions
 
-We are looking for contributors for NaveGo! Until now, NaveGo is a one-man project. We hope the navigation community compromise and contribute with this open-source tool.
+We are looking for contributors for NaveGo! Since integrated navigation is a topic used in several fields (Geomatics, Geology, Mobile Mapping, Autonomous Driving, even Veterinary) we hope other communities than the navigation community compromise and contribute with this open-source project.
 
 You can contribute in many ways: 
 
@@ -29,19 +37,40 @@ You can contribute in many ways:
 
 If you are interested, please feel free to contact Dr. Rodrigo Gonzalez at rodralez [at] frm [dot] utn [dot] edu [dot] ar.
 
-## Documentation
 
-The underlying mathematical model of NaveGo is based on two articles that are recommended for reading: 
+## Publications
+
+The underlying mathematical model of NaveGo is based on two articles which are recommended for reading: 
 
 * R. Gonzalez, J.I. Giribet, and H.D. Patiño. NaveGo: a simulation framework for low-cost integrated navigation systems, Journal of Control Engineering and Applied Informatics, vol. 17, issue 2, pp. 110-120, 2015. [Link](http://ceai.srait.ro/index.php?journal=ceai&page=article&op=view&path%5B%5D=2478).
 
 * R. Gonzalez, J.I. Giribet, and H.D. Patiño. An approach to benchmarking of loosely coupled low-cost navigation systems. Mathematical and Computer Modelling of Dynamical Systems, vol. 21, issue 3, pp. 272-287, 2015. [Link](http://www.tandfonline.com/doi/abs/10.1080/13873954.2014.952642).
 
-## Allan variance working example
+Other publication:
 
-Just execute the file `navego_allan_example.m`. It process 2-hours static measurements from an Sensonor STIM300 IMU.
+* R. Gonzalez, C.A. Catania, P. Dabove, J.C. Taffernaberry, and M. Piras. Model validation of an open-source framework for post-processing INS/GNSS systems. III International Conference on Geographical Information Systems Theory, Applications and Management (GISTAM 2017). Porto, Portugal. April 2017.
 
-## INS/GPS working example
+
+## Acknowledgments
+
+We would like to thank to many people that have contribute to make NaveGo a better tool:
+
+* Dr. Juan Ignacio Giribet (Universidad Nacional de Buenos Aires, Argentina) for this continuous support on theory aspects of INS/GPS systems.
+
+* Dr. Charles K. Toth (The Ohio State University, USA), Dr. Allison Kealy, and M.Sc. Azmir Hasnur-Rabiain (both from The University of Melbourne, Australia) for generously sharing IMU and GPS datasets, and in particular, for Azmir's unselfish help.
+
+* Prof. Zhu, Dr. Yang, and Mr. Bo Sun, all from the Laboratory of Precision Measuring Technology and Instruments, Tianjin University, Tianjin, China, for contributing with IMU static measurements to test Allan variance routines.
+
+* Dr. Paolo Dabove and Dr. Marco Piras (both from DIATI, Politecnico di Torino, Italy) for helping to debug NaveGo and suggesting new features.
+
+
+# Examples
+
+## Allan variance example
+
+Just execute the file `navego_allan_example.m`. It process 2-hours of static measurements from an Sensonor STIM300 IMU.
+
+## INS/GPS example
 
 The file `navego_example.m` tries to demonstrate the use of NaveGo. It compares the performances of two simulated IMUs, ADIS16405 IMU and ADIS16488 IMU, both integrated with a simulated GPS.
 
@@ -57,13 +86,7 @@ clear
 matlabrc
 
 fprintf('\nStarting simulation ... \n')
-```
 
-###  Global variables
-
-```matlab
-global D2R
-global R2D
 ```
 ###  Code execution parameters
 
@@ -78,17 +101,15 @@ IMU2_DATA = 'ON';   % Simulate ADIS16488 IMU data
 IMU1_INS  = 'ON';   % Execute INS/GPS integration for ADIS16405 IMU
 IMU2_INS  = 'ON';   % Execute INS/GPS integration for ADIS16488 IMU
 
-RMSE      = 'ON';   % Show on consolte RMSE results.
 PLOT      = 'ON';   % Plot results.
 
-% If a particular parameter is commented above, set its value to 'OFF'.
+% If a particular parameter is commented above, it is set by default to 'OFF'.
 
 if (~exist('GPS_DATA','var')),  GPS_DATA  = 'OFF'; end
 if (~exist('IMU1_DATA','var')), IMU1_DATA = 'OFF'; end
 if (~exist('IMU2_DATA','var')), IMU2_DATA = 'OFF'; end
 if (~exist('IMU1_INS','var')),  IMU1_INS = 'OFF'; end
 if (~exist('IMU2_INS','var')),  IMU2_INS = 'OFF'; end
-if (~exist('RMSE','var')),      RMSE = 'OFF'; end
 if (~exist('PLOT','var')),      PLOT = 'OFF'; end
 
 ```
@@ -120,20 +141,18 @@ load ref.mat
 % ref.mat contains the reference data structure from which inertial 
 % sensors and GPS wil be simulated. It must contain the following fields:
 
-%         t: time vector (seconds).
-%       lat: latitude vector (radians).
-%       lon: longitude vector (radians).
-%         h: altitude vector (meters).
-%       vel: NED velocities vectors, [north east down] (meter/s).
-%      roll: roll angle vector (radians).
-%     pitch: pitch angle vector (radians).
-%       yaw: yaw angle vector (radians).
-%        kn: number of elements of time vector.
-%     DCMnb: Direct Cosine Matrix nav-to-body, with 'kn' rows and 9
-%     columns. Each row contains the elements of one matrix ordered by
-%     columns as [a11 a21 a31 a12 a22 a32 a13 a23 a33]. Use reshape()
-%     built-in MATLAB function to get the original 3x3 matrix
-%     (reshape(DCMnb(row,:),3,3)).
+%         t: Nx1 time vector (seconds).
+%       lat: Nx1 latitude (radians).
+%       lon: Nx1 longitude (radians).
+%         h: Nx1 altitude (m).
+%       vel: Nx3 NED velocities (m/s).
+%      roll: Nx1 roll angles (radians).
+%     pitch: Nx1 pitch angles (radians).
+%       yaw: Nx1 yaw angle vector (radians).
+%        kn: 1x1 number of elements of time vector.
+%     DCMnb: Nx9 Direct Cosine Matrix nav-to-body. Each row contains 
+%            the elements of one matrix ordered by columns as 
+%            [a11 a21 a31 a12 a22 a32 a13 a23 a33].
 %      freq: sampling frequency (Hz).
 
 ```
@@ -159,8 +178,8 @@ load ref.mat
 %     gpsd : 1x3 gyros dynamic biases PSD (rad/s/root-Hz).
 %     apsd : 1x3 accrs dynamic biases PSD (m/s^2/root-Hz);
 %      freq: 1x1 sampling frequency (Hz).
-% ini_align: 1x3 initial attitude at ti(1).
-% ini_align_err: 1x3 initial attitude errors at ti(1).
+% ini_align: 1x3 initial attitude at t(1).
+% ini_align_err: 1x3 initial attitude errors at t(1).
 
 % ref dataset will be used to simulate IMU sensors.
 
@@ -180,7 +199,7 @@ dt = mean(diff(ADIS16405.t));                    % IMU mean period
 
 imu1 = imu_err_profile(ADIS16405, dt);      % Transform IMU manufacturer error units to SI units.
 
-imu1.ini_align_err = [1 1 5] .* D2R;                     % Initial attitude align errors for matrix P in Kalman filter, [roll pitch yaw] (radians)  
+imu1.ini_align_err = [3 3 10] .* D2R;                     % Initial attitude align errors for matrix P in Kalman filter, [roll pitch yaw] (radians)  
 imu1.ini_align = [ref.roll(1) ref.pitch(1) ref.yaw(1)];  % Initial attitude align at t(1) (radians).
 
 ```
@@ -188,6 +207,8 @@ imu1.ini_align = [ref.roll(1) ref.pitch(1) ref.yaw(1)];  % Initial attitude alig
 ### ADIS16488 IMU error profile
 
 ```matlab
+
+% ref dataset will be used to simulate IMU sensors.
 
 ADIS16488.arw      = 0.3  .* ones(1,3);     % Angle random walks [X Y Z] (deg/root-hour)
 ADIS16488.vrw      = 0.029.* ones(1,3);     % Velocity random walks [X Y Z] (m/s/root-hour)
@@ -206,7 +227,7 @@ dt = mean(diff(ADIS16488.t));                    % IMU mean period
 imu2 = imu_err_profile(ADIS16488, dt);      % Transform IMU manufacturer error units to SI units.
 
 imu2.ini_align_err = [1 1 5] .* D2R;                     % Initial attitude align errors for matrix P in Kalman filter, [roll pitch yaw] (radians)  
-imu2.ini_align = [ref.roll(1) ref.pitch(1) ref.yaw(1)];  % Initial attitude align at t(1) (radians).
+imu2.ini_align = [ref.roll(1) ref.pitch(1) ref.yaw(1)];  % Initial attitude align at t(1) (radians)..
 
 ```
 
@@ -230,7 +251,6 @@ gps.stdm = [5, 5, 10];                 % GPS positions standard deviations [lat 
 gps.stdv = 0.1 * KT2MS .* ones(1,3);   % GPS velocities standard deviations [Vn Ve Vd] (meters/s)
 gps.larm = zeros(3,1);                 % GPS lever arm [X Y Z] (meters)
 gps.freq = 5;                          % GPS operation frequency (Hz)
-
 
 ```
 
@@ -401,7 +421,7 @@ if strcmp(IMU2_INS, 'ON')
     
     % Execute INS/GPS integration
     % ---------------------------------------------------------------------
-    [imu2_e] = ins_gps(imu2, gps, 'quaternion', 'double');
+    [imu2_e] = ins_gps(imu2, gps, 'dcm', 'single');
     % ---------------------------------------------------------------------
     
     save imu2_e.mat imu2_e
@@ -463,16 +483,3 @@ http://www.analog.com/media/en/technical-documentation/data-sheets/ADIS16488.pdf
 
 * Garmin International, Inc. GPS 18x TECHNICAL SPECIFICATIONS. Revision D. October 2011. 
 http://static.garmin.com/pumac/GPS_18x_Tech_Specs.pdf
-
-
-## Acknowledgments
-
-We would like to thank to many people that have contribute to make NaveGo a better tool:
-
-* Dr. Juan Ignacio Giribet (Universidad Nacional de Buenos Aires, Argentina) for this continuous support on theory aspects of INS/GPS systems.
-
-* Dr. Charles K. Toth (The Ohio State University, USA), Dr. Allison Kealy, and M.Sc. Azmir Hasnur-Rabiain (both from The University of Melbourne, Australia) for generously sharing IMU and GPS datasets, and in particular, for Azmir's unselfish help.
-
-* Prof. Zhu, Dr. Yang, and Mr. Bo Sun, all from the Laboratory of Precision Measuring Technology and Instruments, Tianjin University, Tianjin, China, for contributing with IMU static measurements to test NaveGo Allan variance routines.
-
-* Dr. Paolo Dabove and Dr. Marco Piras (both from DIATI, Politecnico di Torino, Italy) for helping to debug NaveGo and suggesting new features.

@@ -1,26 +1,27 @@
-function  [xu, S, xp] = kalman(x, z, S, dt)
+function  [S] = kalman(xp, z, S, dt)
 % kalman: Kalman filter algorithm for NaveGo INS/GPS system.
 %
 % INPUT:
-%   x, 21x1 state vector.
+%  xp, 21x1 a posteriori state vector (old).
 %   z, 6x1 innovations vector.
 %  dt, time period. 
-%   S, data structure with the following fields:
-%       F, 21x21 state transition matrix.
-%       H,  6x21 observation matrix.
-%       Q, 12x12 process noise covariance.
-%       R,  6x6  observation noise covariance.
-%       P, 21x21 a priori error covariance.
-%       G, 21x12 control-input matrix.      
+%   S, data structure with at least the following fields:
+%       F,  21x21 state transition matrix.
+%       H,   6x21 observation matrix.
+%       Q,  12x12 process noise covariance.
+%       R,   6x6  observation noise covariance.
+%       Pp, 21x21 a posteriori error covariance.
+%       G,  21x12 control-input matrix.      
 %
-% INPUT:
-%   xu, 21x1 a posteriori state vector.
-%   xp, 21x1 a priori state vector.
-%   S, the following fields are updated:
+% OUTPUT:
+%    S, the following fields are updated:
+%       xi, 21x1 a priori state vector (new).
+%       xp, 21x1 a posteriori state vector (new).
 %       A,  21x21 state transition matrix.
 %       K,  21x6  Kalman gain matrix.
 %       Qd, 21x6  discrete process noise covariance.
-%       P,  21x21 a posteriore error covariance.   
+%       Pi, 21x21 a priori error covariance.
+%       Pp, 21x21 a posteriori error covariance.  
 %       C,   6x6  innovation (or residual) covariance.
 %
 %   Copyright (C) 2014, Rodrigo Gonzalez, all rights reserved.
@@ -42,37 +43,41 @@ function  [xu, S, xp] = kalman(x, z, S, dt)
 %   <http://www.gnu.org/licenses/>.
 %
 % Reference:
-%			  R. Gonzalez, J. Giribet, and H. Patiño. NaveGo: a
+%			R. Gonzalez, J. Giribet, and H. Patiño. NaveGo: a
 % simulation framework for low-cost integrated navigation systems,
 % Journal of Control Engineering and Applied Informatics, vol. 17,
 % issue 2, pp. 110-120, 2015. Alg. 1.
 %
-% Version: 002
-% Date:    2016/11/18
+%           Dan Simon. Optimal State Estimation. Chapter 5. John Wiley 
+% & Sons. 2006.   
+%
+% Version: 004
+% Date:    2017/05/10
 % Author:  Rodrigo Gonzalez <rodralez@frm.utn.edu.ar>
 % URL:     https://github.com/rodralez/navego
 
 I = eye(max(size(S.F)));
-
-% Step 1, update Kalman gain
-S.C = (S.R + S.H * S.Pp * S.H');
-S.K = (S.Pp * S.H') / (S.C) ;
-
-% Step 2, update vector state
-xu = x + S.K * (z - S.H * x);
-% xu = S.K * z;                 % This expression can be used when x = 0.
-
-% Step 3, update covariance matrix
-S.Pu = (I - S.K * S.H) * S.Pp ;
+S.xp = xp;
 
 % Discretization of continous-time system
-S.A =  expm(S.F * dt);          % Exact expression
+S.A =  expm(S.F * dt);          % "Exact" expression
 % S.A = I + (S.F * dt);         % Approximated expression
 S.Qd = (S.G * S.Q * S.G') .* dt;
 
-% Step 4, predict xp and P
-xp = S.A * xu;
-S.Pp = (S.A * S.Pu * S.A') + S.Qd;
-S.Pp =  0.5 .* (S.Pp + S.Pp');
+% Step 1, update the a priori covariance matrix Pi
+S.Pi = (S.A * S.Pp * S.A') + S.Qd;
+S.Pi =  0.5 .* (S.Pi + S.Pi');
 
+% Step 2, update Kalman gain
+S.C = (S.R + S.H * S.Pi * S.H');
+S.K = (S.Pi * S.H') / (S.C) ;
+
+% Step 3, update the a posteriori state xp
+S.xi = S.A * S.xp;
+S.xp = S.xi + S.K * (z - S.H * S.xi);
+
+% Step 4, update the a posteriori covariance matrix Pp
+J = (I - S.K * S.H);
+S.Pp = J * S.Pi * J' + S.K * S.R * S.K';    % Joseph stabilized version     
+% S.Pp = (I - S.K * S.H) * S.Pi ;           % Alternative implementation
 end
