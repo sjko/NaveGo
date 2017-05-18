@@ -285,7 +285,8 @@ for j = 2:Mg
         Z Z Tpr Z Z Z Z;];
     
     % Execute the extended Kalman filter
-    S = kalman(x, z, S, dtg);
+%     S = kalman(x, z, S, dtg);
+    S = kalman_adaptive(x, z, S, dtg);
     x(10:21) = S.xp(10:21);
     
     %% INS/GPS CORRECTIONS
