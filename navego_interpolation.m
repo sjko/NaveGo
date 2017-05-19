@@ -100,7 +100,8 @@ if (isfield(data, 'roll') & isfield(ref, 'roll'))  % If data is from INS/GPS sol
     ref_i.lat   = interp1(data.t, data.lat,   ref.t, method);
     ref_i.lon   = interp1(data.t, data.lon,   ref.t, method);
     ref_i.h     = interp1(data.t, data.h,     ref.t, method);
-    
+%     ref_i.Pp    = interp1(data.t, data.Pp,    ref.t, method);
+        
     if (isfield(ref, 'vel') & isfield( data, 'vel'))
         
         ref_i.vel = interp1(data.t, data.vel,   ref.t, method);

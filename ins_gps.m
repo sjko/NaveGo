@@ -155,6 +155,7 @@ else % double precision
     Z = zeros(3);
     
     % Kalman matrices for later analysis
+    alpha = zeros(Mg, 1);      % Kalman adjusting factor
     In = zeros(Mg, 6);         % Kalman filter innovations
     Pi = zeros(Mg, 441);       % Elements from a priori covariance matrices, Pi
     Pp = zeros(Mg, 441);       % Elements from a posteriori covariance matrices, Pp
@@ -285,8 +286,8 @@ for j = 2:Mg
         Z Z Tpr Z Z Z Z;];
     
     % Execute the extended Kalman filter
-%     S = kalman(x, z, S, dtg);
-    S = kalman_adaptive(x, z, S, dtg, 10);
+    S = kalman(x, z, S, dtg);
+%     S = kalman_adaptive(x, z, S, dtg, 10*5);
     x(10:21) = S.xp(10:21);
     
     %% INS/GPS CORRECTIONS
@@ -330,6 +331,7 @@ for j = 2:Mg
     % Matrices for later INS/GPS performance analysis
     Xi(j,:) = S.xi';
     Xp(j,:) = S.xp';
+%     alpha(j)  = S.alpha;
     Pi(j,:) = reshape(S.Pi, 1, 441);
     Pp(j,:) = reshape(S.Pp, 1, 441);
     A(j,:)  = reshape(S.A, 1, 441);
@@ -357,6 +359,7 @@ ins_gps_e.B     = B;        % Kalman filter biases compensations
 ins_gps_e.In    = In;       % Kalman filter innovations
 ins_gps_e.Xi    = Xi;       % Kalman filter a priori states
 ins_gps_e.Xp    = Xp;       % Kalman filter a posteriori states
+ins_gps_e.alpha    = alpha;       
 
 fprintf('\n');
 
