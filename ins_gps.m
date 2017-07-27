@@ -115,6 +115,7 @@ if strcmp(precision, 'single')  % single precision
     Z = single(zeros(3));
     
     % Kalman matrices for later analysis
+    alpha = single(zeros(Mg, 6));      % Kalman adjusting factor
     In = single(zeros(Mg, 6));       % Kalman filter innovations
     Pi = single(zeros(Mg, 441));     % Elements from a priori covariance matrix, Pi
     Pp = single(zeros(Mg, 441));     % Elements from a posteriori covariance matrix, Pp
@@ -155,7 +156,7 @@ else % double precision
     Z = zeros(3);
     
     % Kalman matrices for later analysis
-    alpha = zeros(Mg, 1);      % Kalman adjusting factor
+    alpha = zeros(Mg, 6);      % Kalman adjusting factor
     In = zeros(Mg, 6);         % Kalman filter innovations
     Pi = zeros(Mg, 441);       % Elements from a priori covariance matrices, Pi
     Pp = zeros(Mg, 441);       % Elements from a posteriori covariance matrices, Pp
@@ -190,9 +191,13 @@ DCMbn = DCMnb';
 qua   = euler2qua([roll_e(1) pitch_e(1) yaw_e(1)]);
 
 % Initialize Kalman filter matrices
-S.R  = diag([gps.stdv, gps.stdm].^2);
+% S.R  = diag([gps.stdv, gps.stdm].^2);
+S.R  = diag([7 7 7 1 1 1]);
+% *************************************************************************
 S.Q  = diag([imu.arw, imu.vrw, imu.gpsd, imu.apsd].^2);
+% *************************************************************************
 S.Pp = diag([imu.ini_align_err, gps.stdv, gps.std, imu.gb_fix, imu.ab_fix, imu.gb_drift, imu.ab_drift].^2);
+alpha(1) = 1;
 
 % UD filter matrices
 % [Up, Dp] = myUD(S.P);
@@ -223,8 +228,10 @@ for j = 2:Mg
         dti = ti(i) - ti(i-1);
         
         % Correct inertial sensors
-        wb_corrected = (imu.wb(i,:)' + gb_fix + gb_drift );
-        fb_corrected = (imu.fb(i,:)' + ab_fix + ab_drift );
+        % =================================================================
+        wb_corrected = (imu.wb(i,:)' + gb_fix + gb_drift); % 
+        fb_corrected = (imu.fb(i,:)' + ab_fix + ab_drift);
+        % =================================================================
         
         % Attitude update
         omega_ie_N = earthrate(lat_e(i-1), precision);
@@ -286,10 +293,15 @@ for j = 2:Mg
         Z Z Tpr Z Z Z Z;];
     
     % Execute the extended Kalman filter
-    S = kalman(x, z, S, dtg);
-%     S = kalman_adaptive(x, z, S, dtg, 10*5);
-    x(10:21) = S.xp(10:21);
+%     S = kalman(x, z, S, dtg);
+%     S = kalman_adaptive(x, z, S, dtg, 10);  % DING
+    S = kalman_adaptive_2(x, z, S, dtg, 10);    % MOHAMED     
+%     S = kalman_adaptive_3(x, z, S, dtg, 10); % MIO
+%     S = kalman_adaptive_4(x, z, S, dtg, 10); % JWO
     
+    x(10:21) = S.xp(10:21);
+%     x = S.xp;
+  
     %% INS/GPS CORRECTIONS
     
     % Quaternion corrections
@@ -331,10 +343,11 @@ for j = 2:Mg
     % Matrices for later INS/GPS performance analysis
     Xi(j,:) = S.xi';
     Xp(j,:) = S.xp';
-%     alpha(j)  = S.alpha;
+    alpha(j,:)= S.alpha;
     Pi(j,:) = reshape(S.Pi, 1, 441);
     Pp(j,:) = reshape(S.Pp, 1, 441);
-    A(j,:)  = reshape(S.A, 1, 441);
+    A(j,:)  = reshape(S.A,  1, 441);
+ 
     In(j,:) = z';
     B(j,:)  = [gb_fix', ab_fix', gb_drift', ab_drift'];
     
@@ -359,7 +372,7 @@ ins_gps_e.B     = B;        % Kalman filter biases compensations
 ins_gps_e.In    = In;       % Kalman filter innovations
 ins_gps_e.Xi    = Xi;       % Kalman filter a priori states
 ins_gps_e.Xp    = Xp;       % Kalman filter a posteriori states
-ins_gps_e.alpha    = alpha;       
+ins_gps_e.alpha = alpha;       
 
 fprintf('\n');
 

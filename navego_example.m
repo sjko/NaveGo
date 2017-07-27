@@ -50,6 +50,10 @@ close all
 clear
 matlabrc
 
+clear kalman_adaptive;
+clear kalman_adaptive_2;
+clear kalman_adaptive_3;
+
 versionstr = 'NaveGo, release v0.8.0-alpha';
 
 fprintf('\n%s.\n', versionstr)
@@ -59,11 +63,11 @@ fprintf('\nNaveGo: starting simulation ... \n')
 
 % Comment any of the following parameters in order to NOT execute a particular portion of code
 
-GPS_DATA  = 'ON';   % Simulate GPS data
-IMU1_DATA = 'ON';   % Simulate ADIS16405 IMU data
-IMU2_DATA = 'ON';   % Simulate ADIS16488 IMU data
+% GPS_DATA  = 'ON';   % Simulate GPS data
+% IMU1_DATA = 'ON';   % Simulate ADIS16405 IMU data
+% IMU2_DATA = 'ON';   % Simulate ADIS16488 IMU data
 
-IMU1_INS  = 'ON';   % Execute INS/GPS integration for ADIS16405 IMU
+% IMU1_INS  = 'ON';   % Execute INS/GPS integration for ADIS16405 IMU
 IMU2_INS  = 'ON';   % Execute INS/GPS integration for ADIS16488 IMU
 
 PLOT      = 'ON';   % Plot results.

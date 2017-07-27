@@ -165,7 +165,7 @@ if (isinf(imu.gb_corr))
     Fgg = Z;
 else
     Fgg = diag(-1./imu.gb_corr);
-end
+ end
 
 F= [Fee  Fev  Fep   (DCMbn)  Z       (DCMbn)   Z;
     Fve  Fvv  Fvp   Z       (-DCMbn)   Z       (-DCMbn);
