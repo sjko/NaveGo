@@ -4,7 +4,7 @@
 
 NaveGo: an open-source MATLAB/GNU-Octave toolbox for processing integrated navigation systems and performing inertial sensors profiling analysis.
 
-NaveGo is an open-source MATLAB/GNU Octave toolbox for processing integrated navigation systems and simulating inertial sensors and a GNSS receiver. It also performs inertial sensors analysis using the Allan variance. It is freely available online. It is developed under MATLAB/GNU-Octave due to this programming language has become a *de facto* standard for simulation and mathematical computing. NaveGo has been verified by processing real-world data from a real trajectory and contrasting results with a commercial, closed-source software package. Difference between both solutions have shown to be negligible. For more information read (Gonzalez et al., 2017).
+NaveGo is an open-source MATLAB/GNU Octave toolbox for processing integrated navigation systems and simulating inertial sensors and a GNSS receiver. It also performs inertial sensors analysis using the Allan variance. It is freely available online. It is developed under MATLAB/GNU-Octave due to this programming language has become a *de facto* standard for simulation and mathematical computing. NaveGo has been verified by processing real-world data from a real trajectory and contrasting results against a commercial, closed-source software package. Difference between both solutions have shown to be negligible. For more information read the following [paper](http://www.scitepress.org/Papers/2017/63139/index.html).
 
 NaveGo is supported at the moment by three academic research groups: GridTics at the National University of Technology (Argentina), Engineering School at the National University of Cuyo (Argentina), and DIATI at the Politecnico di Torino (Italy). 
 
@@ -26,17 +26,17 @@ Main features of NaveGo are:
 
 If you are using NaveGo in your research, we gently ask you to add the following two cites to your future papers:
 
-* (Gonzalez et al., 2017) R. Gonzalez, C.A. Catania, P. Dabove, J.C. Taffernaberry, and M. Piras. Model validation of an open-source framework for post-processing INS/GNSS systems. III International Conference on Geographical Information Systems Theory, Applications and Management (GISTAM 2017). Porto, Portugal. April 2017. [Download](http://www.scitepress.org/Papers/2017/63139/index.html).
+* R. Gonzalez, C.A. Catania, P. Dabove, J.C. Taffernaberry, and M. Piras. Model validation of an open-source framework for post-processing INS/GNSS systems. III International Conference on Geographical Information Systems Theory, Applications and Management (GISTAM 2017). Porto, Portugal. April 2017. [Download](http://www.scitepress.org/Papers/2017/63139/index.html).
 
-* (Gonzalez et al., 2015) R. Gonzalez, J.I. Giribet, and H.D. Patiño. NaveGo: a simulation framework for low-cost integrated navigation systems, Journal of Control Engineering and Applied Informatics, vol. 17, issue 2, pp. 110-120, 2015. [Download](http://ceai.srait.ro/index.php?journal=ceai&page=article&op=view&path%5B%5D=2478).
+* R. Gonzalez, J.I. Giribet, and H.D. Patiño. NaveGo: a simulation framework for low-cost integrated navigation systems, Journal of Control Engineering and Applied Informatics, vol. 17, issue 2, pp. 110-120, 2015. [Download](http://ceai.srait.ro/index.php?journal=ceai&page=article&op=view&path%5B%5D=2478).
 
 An URL to NaveGo should be provided as the following cite:
 
-Gonzalez, Rodrigo. NaveGo Release v1.1 (Version 1.1). Zenodo. http://doi.org/10.5281/zenodo.1464202. 2018, October 16.
+R. Gonzalez, C. Catania, and P. Dabove. NaveGo: An Open-Source MATLAB/GNU-Octave Toolbox for Processing Integrated Navigation Systems and Performing Inertial Sensors Profiling Analysis. Version 1.1. URL: https://github.com/rodralez/NaveGo. DOI: doi.org/10.5281/zenodo.1464202. October 2018.
 
 ## Contributions
 
-We are looking for contributors for NaveGo! Since integrated navigation is a topic used in several fields as Geomatics, Geology, Mobile Mapping, Autonomous Driving, even Veterinary (yes, Veterinary!), we hope other communities other than the navigation community compromise and contribute with this open-source project.
+We are looking for contributors to NaveGo! Since integrated navigation is a topic used in several fields as Geomatics, Geology, Mobile Mapping, Autonomous Driving, and even Veterinary (yes, Veterinary!) for animal tracking, we hope other communities other than the navigation community compromise and contribute to this open-source project.
 
 You can contribute in many ways: 
 
@@ -45,21 +45,21 @@ You can contribute in many ways:
 * Reporting bugs.
 * Suggesting new features.
 
-If you are interested, please feel free to contact Dr. Rodrigo Gonzalez at rodralez [at] frm [dot] utn [dot] edu [dot] ar.
+If you are interested in joining to NaveGo, please feel free to contact Dr. Rodrigo Gonzalez at rodralez [at] frm [dot] utn [dot] edu [dot] ar.
 
 ## Publications
 
-The underlying mathematical model of NaveGo is based on two articles which are recommended for reading: 
+The underlying mathematical model of NaveGo is based on two articles whose reading is recommended: 
 
-* (Gonzalez et al., 2015) R. Gonzalez, J.I. Giribet, and H.D. Patiño. NaveGo: a simulation framework for low-cost integrated navigation systems, Journal of Control Engineering and Applied Informatics, vol. 17, issue 2, pp. 110-120, 2015. [Link](http://ceai.srait.ro/index.php?journal=ceai&page=article&op=view&path%5B%5D=2478).
+* R. Gonzalez, J.I. Giribet, and H.D. Patiño. NaveGo: a simulation framework for low-cost integrated navigation systems, Journal of Control Engineering and Applied Informatics, vol. 17, issue 2, pp. 110-120, 2015. [Link](http://ceai.srait.ro/index.php?journal=ceai&page=article&op=view&path%5B%5D=2478).
 
-* (Gonzalez et al., 2015a) R. Gonzalez, J.I. Giribet, and H.D. Patiño. An approach to benchmarking of loosely coupled low-cost navigation systems. Mathematical and Computer Modelling of Dynamical Systems, vol. 21, issue 3, pp. 272-287, 2015. [Link](http://www.tandfonline.com/doi/abs/10.1080/13873954.2014.952642).
+* R. Gonzalez, J.I. Giribet, and H.D. Patiño. An approach to benchmarking of loosely coupled low-cost navigation systems. Mathematical and Computer Modelling of Dynamical Systems, vol. 21, issue 3, pp. 272-287, 2015. [Link](http://www.tandfonline.com/doi/abs/10.1080/13873954.2014.952642).
 
 Other publications related to the development of NaveGo:
 
-* (Gonzalez et al., 2017a) R. Gonzalez, E.M. Martinez, and P. Dabove. Assessment of Discrete Stochastic Models of MEMS Inertial Sensors by Using the Allan Variance. In the III International Conference on Sensors and Electronics Instrumentation Advances (SEIA' 2017), 20-22 September 2017, Moscow, Russia.
+* R. Gonzalez, E.M. Martinez, and P. Dabove. Assessment of Discrete Stochastic Models of MEMS Inertial Sensors by Using the Allan Variance. In the III International Conference on Sensors and Electronics Instrumentation Advances (SEIA' 2017), 20-22 September 2017, Moscow, Russia.
 
-* (Gonzalez et al., 2017) R. Gonzalez, C.A. Catania, P. Dabove, J.C. Taffernaberry, and M. Piras. Model validation of an open-source framework for post-processing INS/GNSS systems. III International Conference on Geographical Information Systems Theory, Applications and Management (GISTAM 2017). Porto, Portugal. April 2017.
+* R. Gonzalez, C.A. Catania, P. Dabove, J.C. Taffernaberry, and M. Piras. Model validation of an open-source framework for post-processing INS/GNSS systems. III International Conference on Geographical Information Systems Theory, Applications and Management (GISTAM 2017). Porto, Portugal. April 2017.
 
 
 ## Roadmap
@@ -73,13 +73,27 @@ Future features of NaveGo will be:
 * Adaptive Kalman filter.
 
 
+## Who is using NaveGo?
+
+The following authors have expressed the use of NaveGo within their research framework:
+
+* R. Rabiee, X. Zhong, Y. Yan and W. P. Tay, LaIF: A Lane-Level Self-Positioning Scheme for Vehicles in GNSS-Denied Environments. IEEE Transactions on Intelligent Transportation Systems. doi: 10.1109/TITS.2018.2870048. [Link](http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8489926&isnumber=4358928).
+
+* M. Pachwicewicz and J. Weremczuk, Accuracy Estimation of the Sounding Rocket Navigation System. 2018 XV International Scientific Conference on Optoelectronic and Electronic Sensors (COE), Warsaw, 2018, pp. 1-4. doi: 10.1109/COE.2018.8435180. [Link](http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8435180&isnumber=8435144).
+
+* Ren, X., Sun, M., Jiang, C., Liu, L., & Huang, W. (2018). An Augmented Reality Geo-Registration Method for Ground Target Localization from a Low-Cost UAV Platform. Sensors, 2018, vol. 18, no 11, p. 3739. [Link](https://www.mdpi.com/1424-8220/18/11/3739/htm).
+
+* D. M G and A. A, "Analysis of INS Parameters and Error Reduction by Integrating GPS and INS Signals," 2018 International Conference on Design Innovations for 3Cs Compute Communicate Control (ICDI3C), Bangalore, 2018, pp. 18-23. doi: 10.1109/ICDI3C.2018.00013.   [Link](http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8436621&isnumber=8436608).
+
+* Walendziuk, Wojciech; Oldziej, Daniel; Szatyłowicz, Ewa; Slowik, Maciej. Unmanned aerial vehicle as a measurement tool in engineering and environmental protection. Conference: Photonics Applications in Astronomy, Communications, Industry, and High-Energy Physics Experiments 2018. DOI: 10.1117/12.2501378. 
+
 ## Acknowledgments
 
 We would like to thank to many people that have contribute to make NaveGo a better tool:
 
-* Dr. Juan Ignacio Giribet (Universidad Nacional de Buenos Aires, Argentina) for this continuous support on theory aspects of INS/GNSS systems.
+* Dr. Juan Ignacio Giribet (National University of Buenos Aires, Argentina) for this continuous support on theory aspects of INS/GNSS systems.
 
-* Dr. Charles K. Toth (The Ohio State University, USA), Dr. Allison Kealy, and M.Sc. Azmir Hasnur-Rabiain (both from The University of Melbourne, Australia) for generously sharing IMU and GNSS datasets, and in particular, for Azmir's unselfish help.
+* Dr. Charles K. Toth (The Ohio State University, USA), Dr. Allison Kealy, and M.Sc. Azmir Hasnur-Rabiain (both from The University of Melbourne, Australia) for generously sharing IMU and GNSS datasets, and in particular, for Azmir's unselfish support and help.
 
 * Prof. Zhu, Dr. Yang, and Mr. Bo Sun, all from the Laboratory of Precision Measuring Technology and Instruments, Tianjin University, Tianjin, China, for contributing with IMU static measurements to test Allan variance routines.
 

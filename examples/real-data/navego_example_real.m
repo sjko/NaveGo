@@ -1,8 +1,10 @@
-% Example of how to use NaveGo to post-process real IMU and GNSS data.
+% Example of how to use NaveGo to post-process both real IMU and GNSS data.
 %
-% Main goal: to integrate IMU and GNSS measurements from Ekinox-D IMU.
-% The dataset was generated driving a vehicle through the streets of Turin 
-% city (Italy).
+% Main goal: to integrate IMU and GNSS measurements from Ekinox-D sensor 
+% which includes both IMU and GNSS sensors.
+%
+% Sensors dataset was generated driving a vehicle through the streets of 
+% Turin city (Italy).
 %
 %   Copyright (C) 2014, Rodrigo Gonzalez, all rights reserved.
 %
@@ -24,10 +26,10 @@
 %
 % References:
 %    SBG Systems. SBG Ekinox-D High Accuracy Inertial System Brochure, 
-% TACTICAL GRADE MEMS Inertial Systems, V1.0. February 2014. 
+% Tactical grade MEMS Inertial Systems, v1.0. February 2014. 
 %
-% Version: 001
-% Date:    2018/10/16
+% Version: 002
+% Date:    2018/12/04
 % Author:  Rodrigo Gonzalez <rodralez@frm.utn.edu.ar>
 % URL:     https://github.com/rodralez/navego
 
@@ -81,14 +83,14 @@ fprintf('Loading reference data... \n')
 
 load ref
 
-%% IMU EKINOX error profile
+%% EKINOX IMU 
 
 fprintf('Loading Ekinox IMU data... \n')
 
 load imu
 
 
-%% GPS
+%% EKINOX GNSS 
 
 fprintf('Loading Ekinox GNSS data... \n')
 
@@ -129,9 +131,9 @@ tmin = 138000; % Entering PoliTo parking.
 % tmin = 138000; %
 % tmax = 139190; %
 
-% TUNNEL 1 STRETCH
-% tmin = 139268.5; % entering tunnel
-tmax = 139305.5; % leaving tunnel
+% TUNNEL STRETCH
+% tmin = 139268.5; % Entering tunnel
+tmax = 139305.5; % Leaving tunnel
 
 % Sincronize REF data to tmin and tmax
 idx  = find(ref.t > tmin, 1, 'first' );
@@ -140,14 +142,14 @@ if(isempty(idx) || isempty(fdx))
     error('ref: empty index')
 end
 
-ref.t       = ref.t(idx:fdx);
-ref.roll    = ref.roll(idx:fdx);
+ref.t       = ref.t    (idx:fdx);
+ref.roll    = ref.roll (idx:fdx);
 ref.pitch   = ref.pitch(idx:fdx);
-ref.yaw     = ref.yaw(idx:fdx);
-ref.lat     = ref.lat(idx:fdx);
-ref.lon     = ref.lon(idx:fdx);
-ref.h       = ref.h(idx:fdx);
-ref.vel     = ref.vel(idx:fdx, :);
+ref.yaw     = ref.yaw  (idx:fdx);
+ref.lat     = ref.lat  (idx:fdx);
+ref.lon     = ref.lon  (idx:fdx);
+ref.h       = ref.h    (idx:fdx);
+ref.vel     = ref.vel  (idx:fdx, :);
 
 %% Interpolate INS/GNSS dataset 
 
@@ -165,7 +167,7 @@ fprintf('NaveGo: navigation time under analysis is %.2f minutes or %.2f seconds.
 
 %% Print RMSE from INS/GNSS data
 
-rmse_v = print_rmse (nav_ref, gnss_ref, ref_n, ref_g, 'Ekinox/Ekinox GNSS');
+rmse_v = print_rmse (nav_ref, gnss_ref, ref_n, ref_g, 'Ekinox IMU/GNSS');
 
 %% Save RMSE to CVS file
 
